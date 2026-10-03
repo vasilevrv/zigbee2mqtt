@@ -92,6 +92,8 @@ describe("Controller", () => {
     it("Start controller", async () => {
         settings.setOnboarding(true);
         settings.set(["advanced", "transmit_power"], 14);
+        settings.set(["serial", "transport"], "cpc");
+        settings.set(["serial", "cpc_instance"], "cpcd_0");
         await controller.start();
         expect(ZHController).toHaveBeenCalledWith({
             network: {
@@ -105,7 +107,7 @@ describe("Controller", () => {
             backupPath: path.join(data.mockDir, "coordinator_backup.json"),
             acceptJoiningDeviceHandler: expect.any(Function),
             adapter: {concurrent: undefined, delay: undefined, disableLED: false, transmitPower: 14},
-            serialPort: {baudRate: undefined, rtscts: undefined, path: "/dev/dummy"},
+            serialPort: {baudRate: undefined, rtscts: undefined, path: "/dev/dummy", transport: "cpc", cpcInstance: "cpcd_0"},
         });
         expect(mockZHController.start).toHaveBeenCalledTimes(1);
         expect(mockLogger.info).toHaveBeenCalledWith(`Currently ${Object.values(devices).length - 1} devices are joined.`);

@@ -142,6 +142,8 @@ export type Zigbee2MQTTSettings = {
         adapter?: "deconz" | "zstack" | "ezsp" | "zigate" | "ember" | "zboss" | "zoh";
         baudrate?: number;
         rtscts?: boolean;
+        transport?: "ash" | "cpc";
+        cpc_instance?: string;
     };
     passlist: string[];
     blocklist: string[];

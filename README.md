@@ -36,6 +36,29 @@
     </p>
 </div>
 
+## CPC transport fork
+
+This fork exposes Silicon Labs CPC settings for Ember adapters. Zigbee2MQTT bridges Zigbee devices to MQTT, manages device state, and provides configuration and a web interface. The companion [zigbee-herdsman fork](https://github.com/vasilevrv/zigbee-herdsman/tree/codex/ember-cpc-transport) implements the low-level EZSP transport and native `libcpc` binding.
+
+Use both forks from the `codex/ember-cpc-transport` branch for CPC support. This change adds configuration forwarding; the default `zigbee-herdsman` dependency in `package.json` is unchanged. Install the companion library in your deployment before selecting CPC.
+
+### Requirements
+
+CPC requires Linux, Zigbee NCP firmware with CPC support, a running Silicon Labs `cpcd` daemon, and a built `libcpc` native addon in zigbee-herdsman. See the [companion build instructions](https://github.com/vasilevrv/zigbee-herdsman/blob/codex/ember-cpc-transport/README.md#requirements-and-build). The Zigbee2MQTT process must be able to access the daemon's sockets.
+
+### Configuration
+
+Add these settings to `data/configuration.yaml` alongside your MQTT and other application settings:
+
+```yaml
+serial:
+  adapter: ember
+  transport: cpc
+  cpc_instance: cpcd_0
+```
+
+`transport` accepts `ash` or `cpc`; ASH is the default. `cpc_instance` is optional and defaults to `cpcd_0`. Zigbee2MQTT forwards it as `serialPort.cpcInstance` to zigbee-herdsman. With CPC, the daemon manages the physical serial connection and zigbee-herdsman connects to Zigbee endpoint 5. Restart Zigbee2MQTT after changing these settings.
+
 ## [Getting started](https://www.zigbee2mqtt.io/guide/getting-started)
 
 The [documentation](https://www.zigbee2mqtt.io/) provides you all the information needed to get up and running! Make sure you don't skip sections if this is your first visit, as there might be important details in there for you.

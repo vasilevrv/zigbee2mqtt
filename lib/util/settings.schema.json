@@ -255,6 +255,19 @@
                     "requiresRestart": true,
                     "description": "Adapter type, not needed unless you are experiencing problems"
                 },
+                "transport": {
+                    "type": "string",
+                    "enum": ["ash", "cpc"],
+                    "title": "EZSP transport",
+                    "requiresRestart": true,
+                    "description": "Transport for Silicon Labs Ember adapters. Use cpc for Zigbee NCP firmware connected to cpcd; defaults to ASH."
+                },
+                "cpc_instance": {
+                    "type": "string",
+                    "title": "CPC daemon instance",
+                    "requiresRestart": true,
+                    "description": "Optional cpcd instance_name. Defaults to cpcd_0."
+                },
                 "baudrate": {
                     "type": "number",
                     "title": "Baudrate",

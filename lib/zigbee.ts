@@ -2,7 +2,7 @@ import {randomInt} from "node:crypto";
 import bind from "bind-decorator";
 import type {Events as ZHEvents} from "zigbee-herdsman";
 import {Controller} from "zigbee-herdsman";
-import type {StartResult} from "zigbee-herdsman/dist/adapter/tstype";
+import type {SerialPortOptions, StartResult} from "zigbee-herdsman/dist/adapter/tstype";
 import Device from "./model/device";
 import Group from "./model/group";
 import data from "./util/data";
@@ -49,7 +49,9 @@ export default class Zigbee {
                 rtscts: settings.get().serial.rtscts,
                 path: settings.get().serial.port,
                 adapter: settings.get().serial.adapter,
-            },
+                transport: settings.get().serial.transport,
+                cpcInstance: settings.get().serial.cpc_instance,
+            } as SerialPortOptions & {transport?: "ash" | "cpc"; cpcInstance?: string},
             adapter: {
                 concurrent: settings.get().advanced.adapter_concurrent,
                 delay: settings.get().advanced.adapter_delay,
